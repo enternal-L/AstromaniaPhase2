@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
+}
+
+
+model School {
+  id          Int @id @default(autoincrement())
+  name        String @unique
+  game        Game[] @relation("school")
+}
+
+model Game {
+  id        Int @id @default(autoincrement())
+  score     Int
+  school    School @relation("school", fields: [schoolid],references: [name])
+  schoolid  String
+  createdAt DateTime @default(now())
+}
